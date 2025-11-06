@@ -1,40 +1,45 @@
 package com.example.praktikum5
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.compose.composable
-import androidx.navigation.NavHost
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikum5.ui.theme.view.FormIsian
 import com.example.praktikum5.ui.theme.view.TampilData
-import java.lang.reflect.Modifier
+
 
 enum class Navigasi {
     Formulirku,
     Detail
 }
+
 @Composable
 fun DataApp(
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier
-){
+    modifier: Modifier = Modifier
+) {
     Scaffold { isiRuang ->
+
         NavHost(
             navController = navController,
             startDestination = Navigasi.Formulirku.name,
+            modifier = modifier.padding(isiRuang)
+        ) {
 
-            modifier = Modifier.padding(paddingValues = isiRuang)
-        ){
-            composable(route = Navigasi.Formulirku.name){
+            composable(route = Navigasi.Formulirku.name) {
                 FormIsian(
-                    OnSubmitBtnClick = {
-                        navController.navigate(route = Navigasi.Detail.name)
+                    // pilihanJK = JenisK.map { id -> konteks.resources.getString(id) }
+                    onSubmitBtnClick = {
+                        navController.navigate(Navigasi.Detail.name)
                     }
                 )
             }
-            composable(route = Navigasi.Detail.name){
+
+            composable(route = Navigasi.Detail.name) {
                 TampilData(
                     onBackBtnClick = {
                         cancelAndBackToFormulirku(navController)
@@ -43,4 +48,13 @@ fun DataApp(
             }
         }
     }
+}
+
+private fun cancelAndBackToFormulirku(
+    navController: NavHostController
+) {
+    navController.popBackStack(
+        route = Navigasi.Formulirku.name,
+        inclusive = false
+    )
 }
