@@ -8,6 +8,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikum5.ui.theme.view.FormIsian
+import com.example.praktikum5.ui.theme.view.TampilData
 import java.lang.reflect.Modifier
 
 enum class Navigasi {
@@ -33,8 +34,13 @@ fun DataApp(
                     }
                 )
             }
-            composable(route = Navigasi.Detail.name){}
-
+            composable(route = Navigasi.Detail.name){
+                TampilData(
+                    onBackBtnClick = {
+                        cancelAndBackToFormulirku(navController)
+                    }
+                )
+            }
         }
     }
 }
